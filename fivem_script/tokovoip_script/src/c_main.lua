@@ -27,15 +27,15 @@ local HeadBone = 0x796e;
 --------------------------------------------------------------------------------
 
 -- Handles the talking state of other players to apply talking animation to them
-local function setPlayerTalkingState(player, playerServerId)
-	local talking = tonumber(getPlayerData(playerServerId, "voip:talking"));
-	if (animStates[playerServerId] == 0 and talking == 1) then
-		PlayFacialAnim(GetPlayerPed(player), "mic_chatter", "mp_facial");
-	elseif (animStates[playerServerId] == 1 and talking == 0) then
-		PlayFacialAnim(GetPlayerPed(player), "mood_normal_1", "facials@gen_male@base");
-	end
-	animStates[playerServerId] = talking;
-end
+--local function setPlayerTalkingState(player, playerServerId)
+	--local talking = tonumber(getPlayerData(playerServerId, "voip:talking"));
+	--if (animStates[playerServerId] == 0 and talking == 1) then
+	--	PlayFacialAnim(GetPlayerPed(player), "mic_chatter", "mp_facial");
+	--elseif (animStates[playerServerId] == 1 and talking == 0) then
+	--	PlayFacialAnim(GetPlayerPed(player), "mood_normal_1", "facials@gen_male@base");
+	--end
+	--animStates[playerServerId] = talking;
+--end
 
 RegisterNUICallback("updatePluginData", function(data)
 	local payload = data.payload;
@@ -137,7 +137,7 @@ local function clientProcessing()
 			end
 			--
 			usersdata[#usersdata + 1] = tbl
-			setPlayerTalkingState(player, playerServerId);
+			--setPlayerTalkingState(player, playerServerId);
 		end
 	end
 	voip.plugin_data.Users = usersdata; -- Update TokoVoip's data
