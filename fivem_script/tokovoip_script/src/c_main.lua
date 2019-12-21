@@ -52,10 +52,10 @@ RegisterNUICallback("setPlayerTalking", function(data)
 
 	if (voip.talking == 1) then
 		setPlayerData(voip.serverId, "voip:talking", 1, true);
-		PlayFacialAnim(GetPlayerPed(PlayerId()), "mic_chatter", "mp_facial");
+		--PlayFacialAnim(GetPlayerPed(PlayerId()), "mic_chatter", "mp_facial");
 	else
 		setPlayerData(voip.serverId, "voip:talking", 0, true);
-		PlayFacialAnim(PlayerPedId(), "mood_normal_1", "facials@gen_male@base");
+		--PlayFacialAnim(PlayerPedId(), "mood_normal_1", "facials@gen_male@base");
 	end
 end)
 
@@ -177,7 +177,7 @@ AddEventHandler("initializeVoip", function()
 	refreshAllPlayerData();
 
 	-- Set targetped (used for spectator mod for admins)
-	targetPed = GetPlayerPed(-1);
+	targetPed = PlayerPedId();
 
 	voip.processFunction = clientProcessing; -- Link the processing function that will be looped
 	voip:initialize(); -- Initialize the websocket and controls
