@@ -65,36 +65,47 @@ AddEventHandler("Tokovoip:doRefreshAllPlayerData", doRefreshAllPlayerData);
 --	Utils: Drawing functions
 --------------------------------------------------------------------------------
 
-function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
-	SetTextFont(0);
-	SetTextProportional(0);
-	SetTextScale(scale, scale);
-	SetTextColour(r, g, b, a);
-	SetTextDropShadow(0, 0, 0, 0,255);
-	SetTextEdge(1, 0, 0, 0, 255);
-	SetTextDropShadow();
-	SetTextOutline();
-	SetTextEntry("STRING");
-	AddTextComponentString(text);
-	DrawText(x - width / 2, y - height / 2 + 0.005);
+-- function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
+-- 	SetTextFont(0);
+-- 	SetTextProportional(0);
+-- 	SetTextScale(scale, scale);
+-- 	SetTextColour(r, g, b, a);
+-- 	SetTextDropShadow(0, 0, 0, 0,255);
+-- 	SetTextEdge(1, 0, 0, 0, 255);
+-- 	SetTextDropShadow();
+-- 	SetTextOutline();
+-- 	SetTextEntry("STRING");
+-- 	AddTextComponentString(text);
+-- 	DrawText(x - width / 2, y - height / 2 + 0.005);
+-- end
+
+function DrawTxt(str, x, y, w, h, enableShadow, col1, col2, col3, a, centre)
+    local str = CreateVarString(10, "LITERAL_STRING", str)
+
+    SetTextScale(w, h)
+    SetTextColor(math.floor(col1), math.floor(col2), math.floor(col3), math.floor(a))
+	SetTextCentre(centre)
+	if enableShadow then SetTextDropshadow(1, 0, 0, 0, 255) end
+	Citizen.InvokeNative(0xADA9255D, 1);
+    DisplayText(str, x, y)
 end
 
-function draw3dtext(text, posX, posY, posZ, r, g, b, a)
-	local _, x, y = World3dToScreen2d(posX, posY, posZ);
-	local localPos = GetEntityCoords(GetPlayerPed(localPlayer));
-	local dist = GetDistanceBetweenCoords(localPos, posX, posY, posZ);
-	local maxDist = 100;
-	local size = 0.2;
-	local scale = size - size * (dist / maxDist);
-	local offsetX = 0.07 + 0.0235 * (dist / maxDist);
-	local offsetY = 0.07 + 0.0235 * (dist / maxDist);
+-- function draw3dtext(text, posX, posY, posZ, r, g, b, a)
+-- 	local _, x, y = World3dToScreen2d(posX, posY, posZ);
+-- 	local localPos = GetEntityCoords(GetPlayerPed(localPlayer));
+-- 	local dist = GetDistanceBetweenCoords(localPos, posX, posY, posZ);
+-- 	local maxDist = 100;
+-- 	local size = 0.2;
+-- 	local scale = size - size * (dist / maxDist);
+-- 	local offsetX = 0.07 + 0.0235 * (dist / maxDist);
+-- 	local offsetY = 0.07 + 0.0235 * (dist / maxDist);
 
-	if (dist < maxDist) then
-		if (x and y) then
-			drawTxt(x + offsetX, y + offsetY, 0.185,0.206, scale, text, r, g, b, a);
-		end
-	end
-end
+-- 	if (dist < maxDist) then
+-- 		if (x and y) then
+-- 			drawTxt(x + offsetX, y + offsetY, 0.185,0.206, scale, text, r, g, b, a);
+-- 		end
+-- 	end
+-- end
 
 
 --------------------------------------------------------------------------------
