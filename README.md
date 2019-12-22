@@ -1,5 +1,10 @@
 RedM Fork
 
+If you are using redmrp_respawn add
+
+```	TriggerEvent("initializeVoip"); -- Trigger this event whenever you want to start the voip```
+to the bottom of the `redemrp_respawn:camera` event
+
 # TokoVoip
 TokoVoip is a TeamSpeak plugin used along a FiveM script to add a custom proximity chat and radio system to [FiveM](https://fivem.net/)
 
