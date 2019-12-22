@@ -46,7 +46,7 @@ TokoVoipConfig = {
 		enableStereoAudio = true, -- If set to true, positional audio will be stereo (you can hear people more on the left or the right around you)
 
 		localName = "", -- If set, this name will be used as the user's teamspeak display name
-		localNamePrefix = "[" .. GetPlayerServerId(PlayerId()) .. "] ", -- If set, this prefix will be added to the user's teamspeak display name
+		--localNamePrefix = "[" .. GetPlayerServerId(PlayerId()) .. "] ", -- If set, this prefix will be added to the user's teamspeak display name
 	}
 };
 
@@ -55,7 +55,7 @@ AddEventHandler("onClientResourceStart", function(resource)
 		Citizen.CreateThread(function()
 			TokoVoipConfig.plugin_data.localName = escape(GetPlayerName(PlayerId())); -- Set the local name
 		end);
-		TriggerEvent("initializeVoip"); -- Trigger this event whenever you want to start the voip
+		--TriggerEvent("initializeVoip"); -- Trigger this event whenever you want to start the voip
 	end
 end)
 
