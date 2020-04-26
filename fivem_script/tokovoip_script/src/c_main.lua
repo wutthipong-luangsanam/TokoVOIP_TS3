@@ -48,15 +48,15 @@ end);
 
 -- Receives data from the TS plugin on microphone toggle
 RegisterNUICallback("setPlayerTalking", function(data)
-	voip.talking = tonumber(data.state);
+    voip.talking = tonumber(data.state);
 
-	if (voip.talking == 1) then
-		setPlayerData(voip.serverId, "voip:talking", 1, true);
-		--PlayFacialAnim(GetPlayerPed(PlayerId()), "mic_chatter", "mp_facial");
-	else
-		setPlayerData(voip.serverId, "voip:talking", 0, true);
-		--PlayFacialAnim(PlayerPedId(), "mood_normal_1", "facials@gen_male@base");
-	end
+    if (voip.talking == 1) then
+        setPlayerData(voip.serverId, "voip:talking", 1, true);
+        TaskPlayAnim(PlayerPedId(), "script_story@mud4@ig@ig_8_p1_success","dutch_speech_dutch_face", 8.0, -8.0, -1, 17, 0, true, 0, false, 0, false)
+    else
+        setPlayerData(voip.serverId, "voip:talking", 0, true);
+        TaskPlayAnim(PlayerPedId(), "script_story@mud4@ig@ig_8_p1_success","dutch_speech_dutch_face", 8.0, -8.0, -1, 25, 0, true, 0, false, 0, false)
+    end
 end)
 
 local function clientProcessing()
