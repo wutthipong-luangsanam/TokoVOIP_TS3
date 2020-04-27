@@ -27,15 +27,24 @@ local HeadBone = 0x796e;
 --------------------------------------------------------------------------------
 
 -- Handles the talking state of other players to apply talking animation to them
---local function setPlayerTalkingState(player, playerServerId)
-	--local talking = tonumber(getPlayerData(playerServerId, "voip:talking"));
-	--if (animStates[playerServerId] == 0 and talking == 1) then
-	--	PlayFacialAnim(GetPlayerPed(player), "mic_chatter", "mp_facial");
-	--elseif (animStates[playerServerId] == 1 and talking == 0) then
-	--	PlayFacialAnim(GetPlayerPed(player), "mood_normal_1", "facials@gen_male@base");
-	--end
-	--animStates[playerServerId] = talking;
---end
+local function setPlayerTalkingState(player, playerServerId)
+	local talking = tonumber(getPlayerData(playerServerId, "voip:talking"));
+	if (animStates[playerServerId] == 0 and talking == 1) then
+		PlayFacialAnimation(GetPlayerPed(player), "face_human@gen_male@base", "mood_talking_normal")
+	elseif (animStates[playerServerId] == 1 and talking == 0) then
+		PlayFacialAnimation(GetPlayerPed(player), "face_human@gen_male@base", "mood_normal")
+	end
+	animStates[playerServerId] = talking;
+end
+
+local function PlayFacialAnimation(player, animDict, animName)
+    while not HasAnimDictLoaded(animDict) do
+		Wait(100)
+		RequestAnimDict(animDict)
+	end
+            
+    SetFacialIdleAnimOverride(player, animName, animDict)
+end
 
 RegisterNUICallback("updatePluginData", function(data)
 	local payload = data.payload;
@@ -48,15 +57,15 @@ end);
 
 -- Receives data from the TS plugin on microphone toggle
 RegisterNUICallback("setPlayerTalking", function(data)
-    voip.talking = tonumber(data.state);
+	voip.talking = tonumber(data.state)
 
-    if (voip.talking == 1) then
-        setPlayerData(voip.serverId, "voip:talking", 1, true);
-        TaskPlayAnim(PlayerPedId(), "script_story@mud4@ig@ig_8_p1_success","dutch_speech_dutch_face", 8.0, -8.0, -1, 17, 0, true, 0, false, 0, false)
-    else
-        setPlayerData(voip.serverId, "voip:talking", 0, true);
-        TaskPlayAnim(PlayerPedId(), "script_story@mud4@ig@ig_8_p1_success","dutch_speech_dutch_face", 8.0, -8.0, -1, 25, 0, true, 0, false, 0, false)
-    end
+	if (voip.talking == 1) then
+		setPlayerData(voip.serverId, "voip:talking", 1, true)
+		PlayFacialAnimation(GetPlayerPed(PlayerId()), "face_human@gen_male@base", "mood_talking_normal")
+	else
+		setPlayerData(voip.serverId, "voip:talking", 0, true)
+		PlayFacialAnimation(PlayerPedId(), "face_human@gen_male@base", "mood_normal")
+	end
 end)
 
 local function clientProcessing()
@@ -137,7 +146,7 @@ local function clientProcessing()
 			end
 			--
 			usersdata[#usersdata + 1] = tbl
-			--setPlayerTalkingState(player, playerServerId);
+			setPlayerTalkingState(player, playerServerId);
 		end
 	end
 	voip.plugin_data.Users = usersdata; -- Update TokoVoip's data
