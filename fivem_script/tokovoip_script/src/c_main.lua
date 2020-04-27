@@ -26,17 +26,6 @@ local HeadBone = 0x796e;
 --	Plugin functions
 --------------------------------------------------------------------------------
 
--- Handles the talking state of other players to apply talking animation to them
-local function setPlayerTalkingState(player, playerServerId)
-	local talking = tonumber(getPlayerData(playerServerId, "voip:talking"));
-	if (animStates[playerServerId] == 0 and talking == 1) then
-		PlayFacialAnimation(GetPlayerPed(player), "face_human@gen_male@base", "mood_talking_normal")
-	elseif (animStates[playerServerId] == 1 and talking == 0) then
-		PlayFacialAnimation(GetPlayerPed(player), "face_human@gen_male@base", "mood_normal")
-	end
-	animStates[playerServerId] = talking;
-end
-
 local function PlayFacialAnimation(player, animDict, animName)
     while not HasAnimDictLoaded(animDict) do
 		Wait(100)
@@ -146,7 +135,6 @@ local function clientProcessing()
 			end
 			--
 			usersdata[#usersdata + 1] = tbl
-			setPlayerTalkingState(player, playerServerId);
 		end
 	end
 	voip.plugin_data.Users = usersdata; -- Update TokoVoip's data
